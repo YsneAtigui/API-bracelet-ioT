@@ -36,16 +36,13 @@ class UserService:
             raise UserAlreadyExistsException(email=user_in.email)
         
         hashed_password = get_password_hash(user_in.password)
-        verification_code = generate_6_digit_code()
         
         user_data = user_in.model_dump()
         user_data["hashed_password"] = hashed_password
-        user_data["verification_code"] = verification_code
-        user_data["verification_code_expires_at"] = datetime.utcnow() + timedelta(hours=1)
+        user_data["email_verified_at"] = datetime.utcnow()
         del user_data["password"]
 
         user = self.user_repo.create(db, obj_in=user_data)
-        self.send_verification_email(user, verification_code)
         return user
 
     def update_user(
