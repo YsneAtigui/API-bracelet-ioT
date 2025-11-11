@@ -26,10 +26,10 @@ services:
       - key: SMTP_PASSWORD
         value: "your-password"
 
-  - type: pserv
-    name: iot-db
+databases:
+  - name: iot-db
     databaseName: iot_db
-    databaseUser: iot_user
+    user: iot_user
     plan: free
     postgresMajorVersion: 14
-    ipAllowList: [] 
+    ipAllowList: []
